@@ -24,6 +24,22 @@ app.get("/api/hello", function (req, res) {
   res.json({greeting: 'hello API'});
 });
 
+app.get("/api/timestamp", (req,res)=>{
+  let input = new Date();
+  res.json({unix: input.getTime(), utc: input.toUTCString()});
+})
+
+app.get("/api/timestamp/:input", (req,res)=>{
+  let input;
+  if(/....-..-../.test(req.params.input)){
+    input = new Date(req.params.input);
+    res.json({unix: input.getTime(), utc: input.toUTCString()});
+  } else {
+    input = new Date(req.params.input);
+    res.json({unix: req.params.input, utc: input.toUTCString()});
+  }
+})
+
 
 
 // listen for requests :)
